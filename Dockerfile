@@ -2,17 +2,24 @@ FROM python:3.11-slim
 
 WORKDIR /app
 
-# Copy Python service files
-COPY *.py .
+# Install nginx and supervisor
+RUN apt-get update && apt-get install -y nginx supervisor && rm -rf /var/lib/apt/lists/*
 
-# Copy requirements file
+# Copy application files
+COPY *.py .
 COPY requirements.txt .
 
-# Install dependencies
+# Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Expose port (will be overridden by docker-compose)
-EXPOSE 8000
+# Copy nginx config
+COPY nginx.conf /etc/nginx/sites-available/default
+RUN rm -f /etc/nginx/sites-enabled/default && \
+    ln -s /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 
-# Default command (will be overridden by docker-compose)
-CMD ["uvicorn", "design_service:app", "--host", "0.0.0.0", "--port", "8001"]
+# Create supervisor config
+COPY supervisord.conf /etc/supervisor/conf.d/supervisord.conf
+
+EXPOSE 80
+
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
