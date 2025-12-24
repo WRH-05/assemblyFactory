@@ -1,8 +1,41 @@
 services:
-  web-server:
+  nginx:
     image: nginx:latest
     ports:
-      - "8080:80"
+      - "80:80"
     volumes:
       - ./nginx.conf:/etc/nginx/conf.d/default.conf
+    depends_on:
+      - design
+      - assembly
+      - quality
+      - packaging
+    restart: always
+
+  design:
+    build: .
+    command: uvicorn design_service:app --host 0.0.0.0 --port 8001
+    expose:
+      - "8001"
+    restart: always
+
+  assembly:
+    build: .
+    command: uvicorn assembly_service:app --host 0.0.0.0 --port 8002
+    expose:
+      - "8002"
+    restart: always
+
+  quality:
+    build: .
+    command: uvicorn quality_service:app --host 0.0.0.0 --port 8003
+    expose:
+      - "8003"
+    restart: always
+
+  packaging:
+    build: .
+    command: uvicorn packaging_service:app --host 0.0.0.0 --port 8004
+    expose:
+      - "8004"
     restart: always
