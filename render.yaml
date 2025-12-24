@@ -1,11 +1,7 @@
 services:
   - type: web
     name: assembly-factory
-    env: docker
+    runtime: docker
     dockerfilePath: ./Dockerfile.render
     dockerContext: .
     plan: free
-    healthCheckPath: /api/design
-    envVars:
-      - key: PORT
-        value: 80
