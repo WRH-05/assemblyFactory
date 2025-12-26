@@ -13,7 +13,7 @@ def assemble(product: dict):
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
-        "https://assembly-factory.vercel.app/"
+        "https://assembly-factory.vercel.app"
     ],
     allow_credentials=True,
     allow_methods=["POST"],
