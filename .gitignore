@@ -23,15 +23,42 @@ wheels/
 .installed.cfg
 *.egg
 
+# Virtual Environment
+.venv
+venv/
+ENV/
+
+# Environment Variables
+.env
+.env.local
+
 # IDEs
 .vscode/
 .idea/
 *.swp
 *.swo
 *~
-
-# OS
 .DS_Store
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+.tox/
+coverage.xml
+*.cover
+
+# Logs
+*.log
+logs/
+
+# Docker
+*.pid
+
+# MyPy
+.mypy_cache/
+.dmypy.json
+dmypy.json
 Thumbs.db
 
 # Environment variables

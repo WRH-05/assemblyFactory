@@ -6,7 +6,7 @@ WORKDIR /app
 RUN apt-get update && apt-get install -y nginx supervisor && rm -rf /var/lib/apt/lists/*
 
 # Copy application files
-COPY *.py .
+COPY app/ ./app/
 COPY requirements.txt .
 
 # Install Python dependencies
